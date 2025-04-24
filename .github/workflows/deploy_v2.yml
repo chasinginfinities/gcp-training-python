@@ -41,9 +41,18 @@ jobs:
           docker push ${GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${GAR_REPO}/${SERVICE}:latest
 
   deploy:
+    needs: build_and_push
     runs-on: ubuntu-latest
 
     steps:
+      # --- Authentication using Service Account Key ---
+      - name: Google Auth
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.CICD_SVC_ACCT_PK }} # Use the secret containing your SA key JSON
+      # --------------------------------------------
+      
       - name: Deploy to Cloud Run
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v2
