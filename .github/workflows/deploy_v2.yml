@@ -40,6 +40,29 @@ jobs:
           docker build -t ${GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${GAR_REPO}/${SERVICE}:latest .
           docker push ${GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${GAR_REPO}/${SERVICE}:latest
 
+  test:
+    needs: build_and_push
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x' # Specify your desired Python version
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt # Assuming you have a requirements.txt file
+
+      - name: Run tests
+        run: |
+          pytest
+          echo "Running tests..."
+
   deploy:
     needs: build_and_push
     runs-on: ubuntu-latest
