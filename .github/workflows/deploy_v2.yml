@@ -40,10 +40,6 @@ jobs:
           docker build -t ${GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${GAR_REPO}/${SERVICE}:latest .
           docker push ${GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${GAR_REPO}/${SERVICE}:latest
 
-  test:
-    runs-on: ubuntu-latest
-    steps: # TODO
-
   deploy:
     runs-on: ubuntu-latest
 
