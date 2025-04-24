@@ -1,9 +1,9 @@
-name: Deploy dev
+name: Deploy v2
 
 on:
   push:
     branches:
-      - dev
+      - main
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
